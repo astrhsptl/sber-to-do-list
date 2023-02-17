@@ -1,9 +1,11 @@
 from django.http import Http404
 from rest_framework.response import Response
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
 
 from .models import Project
+from authsystem.models import User
 from .serializers import ProjectSerilizer, GetOnlyProjectSerilizer
+from services.queries import get_queryset_in_tasks
 from services.http_requests import (
     _destroy, _post, 
     _put, _update,
@@ -14,6 +16,9 @@ class ProjectAPIView(ListCreateAPIView):
     serializer_class = ProjectSerilizer
     _my_detail_serializer = GetOnlyProjectSerilizer
     _my_model = Project
+
+    def get_queryset(self, *args):
+        return get_queryset_in_tasks(self.request, self.queryset, self._my_model)
 
     def get(self, request, *args, **kwargs):
         return Response(self._my_detail_serializer(self.get_queryset(), many=True).data)
@@ -45,3 +50,16 @@ class ProjectDetailAPIView(RetrieveUpdateDestroyAPIView):
     
     def delete(self, request, *args, **kwargs):
         return _destroy(request, self.get_object, self.perform_destroy, *args, **kwargs)
+    
+
+class ProjectsForUserAPIView(ListAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerilizer
+    _my_detail_serializer = GetOnlyProjectSerilizer
+    _my_model = Project
+
+    def get_queryset(self):
+        return get_queryset_in_tasks(self.request, self.queryset, self._my_model).filter(participants=User.objects.get(id=self.kwargs['pk']))
+
+    def get(self, request, *args, **kwargs):
+        return Response(self._my_detail_serializer(self.get_queryset(), many=True).data)

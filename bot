@@ -1,0 +1,31 @@
+Смена пароля:
+
+Есть табличка с пользователями (authsystem.models.User)
+
+Задача: реализовать смену пароля
+
+Подробности:
+1) API на drf
+2) Запрос post
+3) ссылка: /api/v1/docs/auth/password/change?user=<user_uuid>
+4) post запросом присылается новый и старый пароль в формате
+{
+    'access': jwt токен,
+    'email': почта,
+    'old_password': старый пароль,
+    'new_password': новый пароль,
+}
+
+1) API на drf
+2) Запрос post
+3) ссылка: /api/v1/docs/auth/password/extereme/change?user=<user_uuid>
+4) post запросом присылается новый и старый пароль в формате
+{
+    'email': почта,
+    'access': jwt токен
+    'new_password': новый пароль,
+}
+ 
+идентификация по jwt.
+пароли приходят в открытом виде. при смене хэшируются методами Django.
+Идентификация по email
