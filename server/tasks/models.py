@@ -55,7 +55,6 @@ class MainTask(models.Model):
     sub_task = models.ManyToManyField(SubTask, blank=True, related_name='sub_tasks')
     participants = models.ManyToManyField(User, blank=True, related_name='main_participants')
 
-
     class Meta:
         verbose_name = ("Main task")
         verbose_name_plural = ("Main tasks")

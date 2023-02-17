@@ -30,6 +30,7 @@ urlpatterns = [
             path('', include('tasks.urls')),
             path('auth/', include('authsystem.urls')),
             path('utils/', include('utilssystem.urls')),
+            path('projects/', include('projects.urls')),
         ])),
     ]))
 ] + static(
