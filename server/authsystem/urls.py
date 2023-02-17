@@ -3,10 +3,14 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView, TokenRefreshView, TokenVerifyView)
 
 from .views import (
-    LoginAPIView, RegisterAPIView,UserInformationAndPatchingRetrieveAPIView
+    LoginAPIView, RegisterAPIView,UserInformationAndPatchingRetrieveAPIView,
+    UserInformationAndPatchingListView,
 )
 
 urlpatterns = [
+    # TO-DO: перед продом вырезать к хуям
+    path('users/', UserInformationAndPatchingListView.as_view()),
+
     path('login/', LoginAPIView.as_view(), name='login'),
     path('register/', RegisterAPIView.as_view(), name='register'),
     path('profile/changes/', UserInformationAndPatchingRetrieveAPIView.as_view(), name='user_progile_changing'),

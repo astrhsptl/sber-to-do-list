@@ -27,8 +27,8 @@ class SubTask(models.Model):
     )
     title = models.CharField(max_length=64)
     file = models.FileField(upload_to='tasks/sub/', blank=True, null=True)
-    status = models.ForeignKey(TaskStatus, on_delete=models.PROTECT)
-    participants = models.ManyToManyField(User, blank=True,)
+    status = models.ForeignKey(TaskStatus, on_delete=models.PROTECT, related_name='sub_status')
+    participants = models.ManyToManyField(User, blank=True, related_name='sub_participants')
 
     class Meta:
         verbose_name = ("sub task")
@@ -51,9 +51,9 @@ class MainTask(models.Model):
     title = models.CharField(max_length=64)
     discription = models.CharField(max_length=256, blank=True, null=True)
     file = models.FileField(upload_to='tasks/main/', blank=True, null=True)
-    status = models.ForeignKey(TaskStatus, on_delete=models.PROTECT)
-    sub_task = models.ManyToManyField(SubTask, blank=True,)
-    participants = models.ManyToManyField(User, blank=True,)
+    status = models.ForeignKey(TaskStatus, on_delete=models.PROTECT, related_name='main_status')
+    sub_task = models.ManyToManyField(SubTask, blank=True, related_name='sub_tasks')
+    participants = models.ManyToManyField(User, blank=True, related_name='main_participants')
 
 
     class Meta:

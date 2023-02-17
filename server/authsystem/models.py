@@ -47,7 +47,7 @@ class User(AbstractBaseUser):
     email = models.EmailField(max_length=256, unique=True)
     name = models.CharField(max_length=64)
     surname = models.CharField(max_length=64)
-    patronymic = models.CharField(max_length=64)
+    patronymic = models.CharField(max_length=64, null=True, blank=True)
     telegram_user_id = models.CharField(max_length=32, null=True, blank=True)
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False) 

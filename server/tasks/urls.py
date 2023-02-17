@@ -13,7 +13,7 @@ urlpatterns = [
     path('task/main/<uuid:pk>/', MainTaskDetailAPIView.as_view(), name='task_detail'),
 
     path('status/', TaskStatusAPIView.as_view(), name='status_list'),
-    path('status/<uuid:pk>/', TaskStatusDetailAPIView.as_view(), name='status_detail'),
+    path('status/<int:pk>/', TaskStatusDetailAPIView.as_view(), name='status_detail'),
 
     path('subtasks/', SubTaskAPIView.as_view(), name='sub_task_list'),
     path('subtasks/<uuid:pk>/', SubTaskDetailAPIView.as_view(), name='sub_task_detail'),

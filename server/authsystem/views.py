@@ -25,6 +25,11 @@ class RegisterAPIView(generics.GenericAPIView):
         response_description, response_status = register(request, self.serializer_class)
         return Response(response_description, status=response_status)
 
+class UserInformationAndPatchingListView(generics.ListAPIView):
+    ''' API for User db model. Support get, put, patch, delete. Queryset - concrete object '''
+    queryset = User.objects.all()
+    serializer_class = UserPatchingSerializer
+
 class UserInformationAndPatchingRetrieveAPIView(generics.RetrieveUpdateDestroyAPIView):
     ''' API for User db model. Support get, put, patch, delete. Queryset - concrete object '''
     queryset = User.objects.all()

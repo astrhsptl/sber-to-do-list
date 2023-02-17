@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'authsystem.apps.AuthsystemConfig',
     'tasks.apps.TasksConfig',
     'projects.apps.ProjectsConfig',
+    'utilssystem.apps.UtilssystemConfig',
 ]
 
 MIDDLEWARE = [
