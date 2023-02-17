@@ -12,8 +12,7 @@ class LoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
-            'email', 'password',
-            'is_superuser', 'is_staff',
+            'email', 'password', 'telegram_user_id'
         )
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -24,10 +23,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = (
-            'email', 'password', 
-            'is_superuser', 'is_staff',
-        )
+        fields = "__all__"
     
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
@@ -36,7 +32,4 @@ class UserPatchingSerializer(serializers.ModelSerializer):
     '''Serializer for user patching. Including name, surname, email, password, is_superuser, is_staff'''
     class Meta:
         model = User
-        fields = (
-            'email', 'password', 
-            'is_superuser', 'is_staff',
-        )
+        fields = "__all__"

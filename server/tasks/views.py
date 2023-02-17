@@ -1,6 +1,6 @@
-from django.db.models import Q
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
+from services.queries import get_queryset_in_tasks
 from .models import TaskStatus, MainTask, SubTask
 from .serilizers import TaskStatusSerilizer, MainTaskSerilizer, SubTaskSerilizer
 
@@ -19,11 +19,7 @@ class MainTaskAPIView(ListCreateAPIView):
     serializer_class = MainTaskSerilizer
     
     def get_queryset(self, *args):
-        try:
-            parametr = self.request.query_params['is_ended']
-            return self.queryset.filter(Q(status_id=(int(parametr)+1))) if parametr == '0' or parametr == '1' else MainTask.objects.prefetch_related()
-        except:
-            return MainTask.objects.prefetch_related()
+        return get_queryset_in_tasks(self.request, self.queryset, MainTask)
 
 
 class MainTaskDetailAPIView(RetrieveUpdateDestroyAPIView):
@@ -36,11 +32,8 @@ class SubTaskAPIView(ListCreateAPIView):
     serializer_class = SubTaskSerilizer
 
     def get_queryset(self, *args):
-        try:
-            parametr = self.request.query_params['is_ended']
-            return self.queryset.filter(Q(status_id=(int(parametr)+1))) if parametr == '0' or parametr == '1' else SubTask.objects.all()
-        except:
-            return SubTask.objects.all()
+        return get_queryset_in_tasks(self.request, self.queryset, SubTask)
+
         
 class SubTaskDetailAPIView(RetrieveUpdateDestroyAPIView):
     queryset = SubTask.objects.all()

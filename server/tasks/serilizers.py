@@ -1,7 +1,8 @@
 from rest_framework import serializers
 
-
 from .models import MainTask, SubTask, TaskStatus
+from authsystem.models import User
+from authsystem.serializers import UserPatchingSerializer
 
 class TaskStatusSerilizer(serializers.ModelSerializer):
     class Meta:
@@ -17,7 +18,8 @@ class SubTaskSerilizer(serializers.ModelSerializer):
         return data
 
 class MainTaskSerilizer(serializers.ModelSerializer):
-    sub_task = SubTaskSerilizer(read_only=True, many=True)
+    sub_task = SubTaskSerilizer(read_only=True, many=True,)
+    participants = UserPatchingSerializer(read_only=True, many=True,)
 
     class Meta:
         model = MainTask

@@ -28,7 +28,7 @@ urlpatterns = [
             path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 
             path('auth/', include('authsystem.urls')),
-            path('tasks/', include('tasks.urls')),
+            path('', include('tasks.urls')),
         ])),
     ]))
 ] + static(

@@ -2,7 +2,7 @@ import uuid
 
 from django.db import models
 from django.urls import reverse_lazy
-
+from authsystem.models import User
 
 class TaskStatus(models.Model):
     title = models.CharField(max_length=64)
@@ -28,6 +28,7 @@ class SubTask(models.Model):
     title = models.CharField(max_length=64)
     file = models.FileField(upload_to='tasks/sub/', blank=True, null=True)
     status = models.ForeignKey(TaskStatus, on_delete=models.PROTECT)
+    participants = models.ManyToManyField(User, blank=True,)
 
     class Meta:
         verbose_name = ("sub task")
@@ -51,7 +52,8 @@ class MainTask(models.Model):
     discription = models.CharField(max_length=256, blank=True, null=True)
     file = models.FileField(upload_to='tasks/main/', blank=True, null=True)
     status = models.ForeignKey(TaskStatus, on_delete=models.PROTECT)
-    sub_task = models.ManyToManyField(SubTask, blank=True, null=True)
+    sub_task = models.ManyToManyField(SubTask, blank=True,)
+    participants = models.ManyToManyField(User, blank=True,)
 
 
     class Meta:
