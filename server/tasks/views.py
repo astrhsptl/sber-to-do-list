@@ -1,7 +1,8 @@
 from django.http import Http404
 from rest_framework.response import Response
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
 
+from authsystem.models import User
 from services.queries import get_queryset_in_tasks
 from .models import TaskStatus, MainTask, SubTask
 from .serilizers import (
@@ -12,6 +13,32 @@ from services.http_requests import (
     _destroy, _post, 
     _put, _update,
 )
+
+class MainTaskForUserAPIView(ListAPIView):
+    queryset = MainTask.objects.all()
+    serializer_class = MainTaskSerilizer
+    _my_detail_serializer = GetOnlyMainTaskSerilizer
+    _my_model = MainTask
+
+    def get_queryset(self):
+        return get_queryset_in_tasks(self.request, self.queryset, self._my_model).filter(participants=User.objects.get(id=self.kwargs['pk']))
+
+    def get(self, request, *args, **kwargs):
+        return Response(self._my_detail_serializer(self.get_queryset(), many=True).data)
+
+class SubTaskForUserAPIView(ListAPIView):
+    queryset = SubTask.objects.all()
+    serializer_class = SubTaskSerilizer
+    _my_detail_serializer = GetOnlySubTaskSerilizer
+    _my_model = SubTask
+
+    def get_queryset(self):
+        return get_queryset_in_tasks(self.request, self.queryset, self._my_model).filter(participants=User.objects.get(id=self.kwargs['pk']))
+
+    def get(self, request, *args, **kwargs):
+        return Response(self._my_detail_serializer(self.get_queryset(), many=True).data)
+    
+
 
 class TaskStatusAPIView(ListCreateAPIView):
     queryset = TaskStatus.objects.all()

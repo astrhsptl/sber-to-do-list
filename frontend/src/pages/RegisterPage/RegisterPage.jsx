@@ -6,9 +6,10 @@ import Input from '../../UI/Input'
 import api_paths from '../../utils/APIMap';
 import setCookie from '../../utils/cookies';
 import capitalizeFirstLetter from '../../utils/utils';
-
+import { useNavigate } from "react-router-dom";
 
 export default function RegisterPage() {
+  let navigate = useNavigate();
   let [inputData, setInputData] = useState({
     name: '',
     surname: '',
@@ -19,10 +20,10 @@ export default function RegisterPage() {
 
   async function APIRequest() {
     let resp = await axios.post(api_paths.register, inputData);
-    await console.log(resp.status === 200); 
+    await resp.status === 200 ? Object.keys(resp.data).map( responseParametr => (document.cookie=`${responseParametr}=${resp.data[responseParametr]}`)) : console.log();
 
-    await resp.status === 200 ? Object.keys(resp.data).map( responseParametr => (setCookie(responseParametr, resp.data[responseParametr]))) : console.log();
     await console.log(document.cookie); 
+    return navigate('/');
   };
 
     

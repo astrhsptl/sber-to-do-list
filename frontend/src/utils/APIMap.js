@@ -1,4 +1,4 @@
-const server_domain = 'http://0.0.0.0:4000/api/v1/docs/';
+const server_domain = 'http://alexander.kizimenko.fvds.ru/api/v1/docs/';
 
 const api_paths = {
     register: server_domain + 'auth/register/',
