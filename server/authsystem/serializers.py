@@ -3,6 +3,14 @@ from rest_framework import serializers
 from .models import User
 
 
+class StartPasswordRestoreSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+class PasswordRestoreSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField()
+
+
 class LoginSerializer(serializers.ModelSerializer):
     '''Login serializer. Including name, surname, email, password, is_superuser, is_staff'''
     password = serializers.CharField(

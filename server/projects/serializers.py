@@ -4,6 +4,11 @@ from .models import Project
 from authsystem.serializers import UserPatchingSerializer
 from tasks.serilizers import MainTaskSerilizer
 
+
+class InviteLinkSerializer(serializers.Serializer):
+    project_id = serializers.UUIDField()
+    email = serializers.EmailField()
+
 class ProjectSerilizer(serializers.ModelSerializer):
     class Meta:
         model = Project
