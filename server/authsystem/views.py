@@ -11,14 +11,14 @@ from .serializers import (
 from .models import User
 from server.settings import ALLOWED_HOSTS
 from services.task import sending_mail
-from .serializers import UserPatchingSerializer, PasswordRestoreSerializer
+from .serializers import UserPatchingSerializer, PasswordRestoreSerializer, LoginRequestSerializer, LoginSerializer
 
 class LoginAPIView(generics.GenericAPIView):
     '''This api relise sign in on jwt architecture. Return name, surname, email, is_superuser, is_staff and access token. Supports only post request'''
-    serializer_class = LoginSerializer
+    serializer_class = LoginRequestSerializer
     
     def post(self, request) -> Response:
-        response_description, response_status = authentication(request, self.serializer_class)
+        response_description, response_status = authentication(request, LoginSerializer)
         return Response(response_description, status=response_status)
 
 class RegisterAPIView(generics.GenericAPIView):

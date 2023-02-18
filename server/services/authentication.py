@@ -13,10 +13,9 @@ def register(request, serializer_class: Serializer):
         user = data.save()
         tokens = _get_access_refresh_tokens_for_user(user)
         
-        data = dict(data.data)
+        data = data.data
         data['access'] = tokens['access'] 
         data['refresh'] = tokens['refresh']
-
         return data, status.HTTP_200_OK
 
     return data.errors, status.HTTP_400_BAD_REQUEST

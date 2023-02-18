@@ -29,6 +29,8 @@ class SubTask(models.Model):
     file = models.FileField(upload_to='tasks/sub/', blank=True, null=True)
     status = models.ForeignKey(TaskStatus, on_delete=models.PROTECT, related_name='sub_status')
     participants = models.ManyToManyField(User, blank=True, related_name='sub_participants')
+    deadline = models.DateField(blank=True, null=True)
+
 
     class Meta:
         verbose_name = ("sub task")
@@ -54,6 +56,7 @@ class MainTask(models.Model):
     status = models.ForeignKey(TaskStatus, on_delete=models.PROTECT, related_name='main_status')
     sub_task = models.ManyToManyField(SubTask, blank=True, related_name='sub_tasks')
     participants = models.ManyToManyField(User, blank=True, related_name='main_participants')
+    deadline = models.DateField(blank=True, null=True)
 
     class Meta:
         verbose_name = ("Main task")

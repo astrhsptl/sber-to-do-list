@@ -10,7 +10,7 @@ from django.contrib.auth.models import (
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password, **kwargs):
+    def create_user(self, name, surname, patronymic, email, password, **kwargs):
         if email is None:
             raise TypeError('Users must have an email address.')
         
@@ -18,6 +18,9 @@ class UserManager(BaseUserManager):
             raise TypeError('Users must have an email address.')
 
         user = self.model(email=self.normalize_email(email))
+        user.name = name
+        user.surname = surname
+        user.patronymic = patronymic
         user.set_password(password)
         user.save()
 
@@ -49,6 +52,7 @@ class User(AbstractBaseUser):
     surname = models.CharField(max_length=64)
     patronymic = models.CharField(max_length=64, null=True, blank=True)
     telegram_user_id = models.CharField(max_length=32, null=True, blank=True)
+    avatar = models.ImageField(upload_to='user/avatar/', null=True, blank=True)
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False) 
     is_staff = models.BooleanField(default=False)

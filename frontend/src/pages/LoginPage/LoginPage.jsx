@@ -15,10 +15,11 @@ export default function LoginPage() {
 
   async function APIRequest() {
     let resp = await axios.post(api_paths.login, inputData);
-    await console.log(resp.status === 200); 
 
-    await resp.status === 200 ? Object.keys(resp.data).map( responseParametr => (setCookie(responseParametr, resp.data[responseParametr]))) : console.log();
-    await console.log(document.cookie); 
+    await resp.status === 200 ? Object.keys(resp.data).map( responseParametr => (document.cookie=`${responseParametr}=${resp.data[responseParametr]}`)) : console.log();
+    
+    await console.log(document.cookie);
+    await console.log(resp.data); 
   };
 
     
@@ -26,7 +27,7 @@ export default function LoginPage() {
   return (
     <div className={'register-block'}>
       <Header path={useLocation().pathname}></Header>
-      This is a register page
+      This is a login page
       {Object.keys(inputData).map(currentInputName => (
         <Input 
           key={currentInputName}
@@ -35,7 +36,7 @@ export default function LoginPage() {
           onChange={e => setInputData({ ...inputData, [currentInputName]: e.target.value })}>  
         </Input>))}
 
-      <button onClick={APIRequest}>Login</button>
+      <button onClick={APIRequest}>Log in</button>
     </div>
   )
 }

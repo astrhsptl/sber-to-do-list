@@ -18,6 +18,7 @@ class Project(models.Model):
     status = models.ForeignKey(TaskStatus, on_delete=models.PROTECT, related_name='project_participants')
     tasks = models.ManyToManyField(MainTask, blank=True, related_name='project_tasks')
     participants = models.ManyToManyField(User, blank=True, related_name='project_participants')
+    deadline = models.DateField(blank=True, null=True)
 
     class Meta:
         verbose_name = ("Main task")
