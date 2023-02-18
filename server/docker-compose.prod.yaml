@@ -25,10 +25,12 @@ services:
     build: .
     depends_on:
       - db
+      -  celery
     command: >
       sh -c " python manage.py makemigrations &&
               python manage.py migrate &&
               python manage.py collectstatic --noinput &&
+              celery -A server worker -l info --detach &&
               gunicorn server.wsgi:application --bind 0.0.0.0:8000"
     ports:
       - "8000:8000"
@@ -36,7 +38,18 @@ services:
       - static_volume:/app/backend/staticfiles
       - media_volume:/app/backend/media
 
+  redis:
+    image: redis:latest 
+
+  celery:
+    build: .
+    volumes:
+      - celery:/app/
+    depends_on:
+      - redis
+
 volumes:
   media_volume:
   static_volume:
   postgres_data:
+  celery:
