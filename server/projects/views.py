@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.generics import (
     ListCreateAPIView, RetrieveUpdateDestroyAPIView,
     ListAPIView, RetrieveAPIView, GenericAPIView)
+from tasks.models import TaskStatus
 
 from .models import Project
 from authsystem.models import User
@@ -15,7 +16,7 @@ from services.http_requests import (
     _destroy, _post, 
     _put, _update,
 )
-from services.task import _archive_project, sending_mail
+from services.task import  _archive_project, sending_mail
 from server.settings import ALLOWED_HOSTS
 
 class SendInviteLinkAPIView(GenericAPIView):
@@ -121,5 +122,7 @@ class ArchiveProject(RetrieveAPIView):
     
     def post(self, request, *args, **kwargs):
         _archive_project(
-            project=self.get_queryset()[0])
+            project=self.get_queryset()[0],
+            instance=TaskStatus.objects.get(pk=1),
+            )
         return Response({'detail': 'successful started'}, status=status.HTTP_202_ACCEPTED)
