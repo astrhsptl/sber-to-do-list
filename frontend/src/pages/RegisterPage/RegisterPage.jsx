@@ -7,6 +7,7 @@ import api_paths from '../../utils/APIMap';
 import setCookie from '../../utils/cookies';
 import capitalizeFirstLetter from '../../utils/utils';
 import { useNavigate } from "react-router-dom";
+import classes from "../../UI/Styles.module.css";
 
 export default function RegisterPage() {
   let navigate = useNavigate();
@@ -23,7 +24,7 @@ export default function RegisterPage() {
     await resp.status === 200 ? Object.keys(resp.data).map( responseParametr => (document.cookie=`${responseParametr}=${resp.data[responseParametr]}`)) : console.log();
 
     await console.log(document.cookie); 
-    return navigate('/');
+    return navigate('/account');
   };
 
     
@@ -31,16 +32,17 @@ export default function RegisterPage() {
   return (
     <div className={'register-block'}>
       <Header path={useLocation().pathname}></Header>
-      This is a register page
-      {Object.keys(inputData).map(currentInputName => (
-        <Input 
-          key={currentInputName}
-          type={currentInputName} 
-          placeholderName={capitalizeFirstLetter(currentInputName)} 
-          onChange={e => setInputData({ ...inputData, [currentInputName]: e.target.value })}>  
-        </Input>))}
+      <div className={classes.registeBlock}>
+        {Object.keys(inputData).map(currentInputName => (
+          <Input 
+            key={currentInputName}
+            type={currentInputName} 
+            placeholderName={capitalizeFirstLetter(currentInputName)} 
+            onChange={e => setInputData({ ...inputData, [currentInputName]: e.target.value })}>  
+          </Input>))}
 
-      <button onClick={APIRequest}>Register</button>
-    </div>
+        <button className={classes.btnNormal} onClick={APIRequest}>Register</button>
+      </div>  
+  </div>
   )
 }

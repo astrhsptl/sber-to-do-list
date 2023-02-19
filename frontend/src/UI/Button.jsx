@@ -1,6 +1,8 @@
+import classes from './Styles.module.css';
+
 export default function Button(props){
     return(
-        <button>{props.title}</button>
+        <button  className={`${classes.btn}`}>{props.title}</button>
     );
 
 }

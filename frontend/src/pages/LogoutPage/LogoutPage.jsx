@@ -2,6 +2,7 @@ import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import Button from '../../UI/Button';
 import Header from '../../UI/Header';
+import classes from "../../UI/Styles.module.css";
 
 function deleteAllCookies(navigate, path) {
     const cookies = document.cookie.split(";");
@@ -21,10 +22,9 @@ export default function LogoutPage() {
    let navigate = useNavigate();
   
    return (
-    <div>LogoutPage
+    <div>
       <Header path={useLocation().pathname}></Header>
-
-    <button onClick={() => deleteAllCookies(navigate, '/login')}>Logout</button>        
+      <button onClick={() => deleteAllCookies(navigate, '/login')} className={`${classes.registeBlock} ${classes.btnNormal} ${classes.text}`}>Logout</button>
     </div>
   )
 }

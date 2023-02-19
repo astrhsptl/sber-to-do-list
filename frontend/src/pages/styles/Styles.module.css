@@ -1,0 +1,25 @@
+.project {
+    display: grid;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 0;
+}
+
+.projectText{
+    display: block;
+    font-size: 1em;
+}
+
+.participants {
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+    /* border: 1px solid black; */
+    border-radius: 5px;
+}
+
+.renderItem {
+    display: block;
+    border: 1px solid black;
+
+}

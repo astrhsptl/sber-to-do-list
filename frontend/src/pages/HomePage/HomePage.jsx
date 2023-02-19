@@ -7,7 +7,6 @@ export default function HomePage() {
   return (
     <div className={'home'}>
       <Header path={useLocation().pathname}></Header>
-      It is a homepage
     </div>
   );
 };
